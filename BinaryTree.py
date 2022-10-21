@@ -1,9 +1,20 @@
 class Node:
-    pass
+    def __init__(self, data):
+        self.data = data
+        self.right = None
+        self.left = None
+
+    def __str__(self):
+        return f'{self.data}'
+
+# root = Node(15)
+# root.left = Node(10)
+# root.right = Node(16)
+# print(f'root:, {root}, left: {root.left}, right: {root.right}')
 
 class BinaryTree:
     def __init__(self):
-        pass
+        self.root = None
 
     def insert(self, data):
         '''
@@ -11,7 +22,41 @@ class BinaryTree:
             creates a new Node from the data passed in and adds it to the tree
             If the data is already in the tree, does not insert it again
         '''
-        pass
+        new_node = Node(data)
+        # if this is the first node, make new node the root!
+        if not self.root:
+            self.root = new_node
+            return
+
+        # loop over the tree starting at the root
+        # keep track of the current node
+        current_node = self.root
+        while current_node:
+            # if the data is smaller than the current node
+            if new_node.data < current_node.data:
+                # ...if there is no left
+                if not current_node.left:
+                    # insert the node to the left of current node
+                    current_node.left = new_node
+                    return
+                # if there is a left, we want to keep iterating
+                else:
+                    current_node = current_node.left
+            # if the data is greater than the current node
+            if new_node.data > current_node.data:
+                # if there is no right
+                if not current_node.right:
+                    # insert new node
+                    current_node.right = new_node
+                    return
+                # if there is a right, continue iterating
+                else:
+                    current_node = current_node.right
+            # if the data is a duplicate of the current node
+            else:
+                # stop iterating
+                return
+        
     
     def dfs(self, val):
         '''
@@ -41,3 +86,7 @@ class BinaryTree:
             default start is at root node
         '''
         pass
+
+my_tree = BinaryTree()
+my_tree.insert(15)
+print(my_tree.root)
